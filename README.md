@@ -41,26 +41,27 @@
 2. init go dependencies in `/pocketbase-publisher` folder
 
     ```bash
-    # in /pocketbase-publisher folder
+      # in /pocketbase-publisher folder
     go mod init <app-name> && go mod tidy
-    # Note: <app-name> can be whatever you want but
-    # will be name of the executable file created on build
+      # Note: <app-name> can be whatever you want but
+      # will be name of the executable file created on build
     ```
 
 3. install node dependences in `/listener-demo` folder (optional)
 
     ```sh
-    # in /listener-demo folder
+      # in /listener-demo folder
     npm i
     ```
 
-4. Following the example in `.env.example` Create `.env` file in the root folder and fill in environemental
+4. Following the example in `/pocketbase-publisher/.env.example` Create `.env` file in the `/pocketbase-publisher` folder and fill in environemental
 
-    ```SH
-    # in /.env file
-    RABBITMQ_URL="amqp://<username>:<password>@<rabbitmq-host>:<rabbitmg-port>/"
+    ```bash
+     # in /pocketbase-publisher/.env file
+    RABBITMQ_URL="amqp://<username>:<password>@<rabbitmq-host>:<rabbitmg-port>/" 
+     # replace with your rabbitmq connection string
     RABBITMQ_EXCHANGE="my-exchange"
-    # replace with your rabbitmq url and any name you wish to give the exchange
+     # replace with any name you wish to give the exchange
     ```
 
 #### No RabbitMQ? No problem
@@ -78,14 +79,14 @@ Or run `docker compose up` using [this docker compose yml file](./media/docker-c
 1. Start the pocketbase application
 
    ```sh
-   # in /pocketbase-publisher folder
+     # in /pocketbase-publisher folder
    go run main.go serve
    ```
 
 2. Start up the message/event listener
 
    ```sh
-   # in /listener-demo
+     # in /listener-demo
    npm run dev
    ```
 
@@ -94,9 +95,9 @@ Or run `docker compose up` using [this docker compose yml file](./media/docker-c
 4. To build a statically linked single file application, you can run
 
    ```sh
-   # create build file
+     # create build file
    CGO_ENABLED=0 go build
-   # run created executable
+     # run created executable
    ./my-app serve
    ```
 

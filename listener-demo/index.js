@@ -1,4 +1,4 @@
-require('dotenv').config({path: "../.env"})
+require('dotenv').config({path: "../pocketbase-publisher/.env"})
 const amqplib = require('amqplib');
 
 const exchangeName = process.env.RABBITMQ_EXCHANGE;

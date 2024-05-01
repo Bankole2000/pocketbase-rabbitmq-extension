@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/bankole2000/pocketbase"
+	"github.com/bankole2000/pocketbase/apis"
+	"github.com/bankole2000/pocketbase/core"
+	"github.com/bankole2000/pocketbase/models"
 	"github.com/joho/godotenv"
-	"github.com/pocketbase/pocketbase"
-	"github.com/pocketbase/pocketbase/apis"
-	"github.com/pocketbase/pocketbase/core"
-	"github.com/pocketbase/pocketbase/models"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -39,7 +39,7 @@ func failOnError(err error, msg string) {
 func goDotEnvVariable(key string) string {
 
 	// load .env file
-	err := godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 
 	if err != nil {
 		log.Fatalf("Error loading .env file")
@@ -79,10 +79,10 @@ func sendEventMessage(eventType string, action string, record *models.Record) {
 
 	// body := bodyFrom(os.Args)
 	err = ch.PublishWithContext(ctx,
-		"gistable", // exchange
-		"",         // routing key
-		false,      // mandatory
-		false,      // immediate
+		exchange, // exchange
+		"",       // routing key
+		false,    // mandatory
+		false,    // immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        jsonBytes,
@@ -134,6 +134,7 @@ func main() {
 
 	app.OnCollectionAfterDeleteRequest().Add(func(e *core.CollectionDeleteEvent) error {
 		log.Printf("COLLECTION %v => DELETED", e.Collection.Name)
+
 		return nil
 	})
 
